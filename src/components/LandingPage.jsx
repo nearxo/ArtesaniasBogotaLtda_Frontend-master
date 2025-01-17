@@ -1,12 +1,12 @@
 // src/components/LandingPage.jsx
 import React from 'react';
 import { GiColumnVase } from 'react-icons/gi';
-import Navbar from './Navbar';
+import Navbar from './Navbar'; // Importar el nuevo componente InNavbar
 
 const LandingPage = () => {
   return (
     <>
-      <Navbar />
+      <Navbar /> {/* Cambiar Navbar por InNavbar */}
       <div className="container">
         <header className="header">
           <h1>Artesanías Bogotá</h1>
