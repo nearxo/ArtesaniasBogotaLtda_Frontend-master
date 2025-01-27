@@ -6,13 +6,13 @@
 /* Variables globales */
 :root {
   /* Colores */
-  --color-primario: #24435b;
-  --color-secundario: #A34343 ;
-  --color-terciario: #f2d58d ;
-  --color-fondo: #fff7ea;
-  --color-negro: #333333;
+  --color-primario: #4c3c25;
+  --color-secundario: #8c281f ;
+  --color-terciario: #bf8c4f ;
+  --color-fondo: #f4e6b8;
+  --color-negro: #261f16;
   --color-destaque: #FF6F61;
-  --color-hover: #4B6587;
+  --color-hover: #bf8c80;
 
   /* Sombras y bordes */
   --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);

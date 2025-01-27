@@ -1,7 +1,7 @@
 // src/components/LandingPage.jsx
 import React from 'react';
 import { GiColumnVase } from 'react-icons/gi';
-import Navbar from './Navbar'; // Importar el nuevo componente InNavbar
+import Navbar from './Navbar'; // 
 
 const LandingPage = () => {
   return (

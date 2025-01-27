@@ -8,10 +8,19 @@ const SidebarAdmin = () => {
       <nav className="sidebar-nav">
         <ul>
           <li>
-            <Link to="/admin/statistics">Estadísticas de Productos</Link>
+            <Link to="/admin/Statistics">Estadísticas de Productos</Link>
           </li>
           <li>
-            <Link to="/admin/products">Productos</Link>
+            <Link to="/admin/Products">Productos</Link>
+          </li>
+          <li>
+            <Link to="/admin/products">Clientes</Link>
+          </li>
+          <li>
+            <Link to="/admin/products">Empleados</Link>
+          </li>
+          <li>
+            <Link to="/admin/products">Tiendas</Link>
           </li>
         </ul>
       </nav>
