@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import ProductCardStore from './ProductCardStore';
+import ProductCardClient from './ProductCardClient';
 
-const Inventory = () => {
+const Shopping = () => {
   const [products, setProducts] = useState([]);
 
   // Simula una llamada al backend
@@ -44,7 +44,7 @@ const Inventory = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Inventario</h2>
+      <h2 className="text-2xl font-semibold mb-4">Tienda</h2>
 
       {/* Cargando productos */}
       {products.length === 0 ? (
@@ -52,7 +52,7 @@ const Inventory = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {products.map((product) => (
-            <ProductCardStore
+            <ProductCardClient
               key={product.id}
               name={product.name}
               description={product.description}
@@ -67,4 +67,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default Shopping;
