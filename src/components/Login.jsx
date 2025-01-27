@@ -1,7 +1,6 @@
-// src/components/LogIn.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
-import Navbar from './Navbar'; // Importa el componente Navbar
+import { useNavigate } from 'react-router-dom'; // Para redirigir según el rol
+import Navbar from './Navbar';
 import '../styles/globals.css';
 
 const LogIn = () => {
@@ -9,6 +8,8 @@ const LogIn = () => {
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,31 +19,57 @@ const LogIn = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      // Enviar los datos del formulario a un endpoint (ajustar la URL según sea necesario)
-      await axios.post('https://tuapi.com/login', formData);
+
+    // Usuarios de prueba
+    const users = [
+      { email: 'cliente@gmail.com', password: 'GrupoBArtesanias', role: 'client' },
+      { email: 'administrador@gmail.com', password: 'GrupoBArtesanias', role: 'admin' },
+      { email: 'tienda@gmail.com', password: 'GrupoBArtesanias', role: 'store' },
+    ];
+
+    // Validar credenciales
+    const user = users.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
+
+    if (user) {
       alert('Inicio de sesión exitoso');
-    } catch (error) {
-      console.error('Error al iniciar sesión', error);
-      alert('Error al iniciar sesión');
+      // Redirigir según el rol
+      if (user.role === 'admin') navigate('/admin/home');
+      if (user.role === 'client') navigate('/client/home');
+      if (user.role === 'store') navigate('/store/home');
+    } else {
+      alert('Correo o contraseña incorrectos');
     }
   };
 
   return (
     <>
-      <Navbar /> {/* Añade la Navbar aquí */}
+      <Navbar />
       <div className="form-container">
         <h2>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit} className="form-login">
           <div className="form-group">
             <label htmlFor="email">Correo Electrónico:</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña:</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
           </div>
           <button type="submit" className="button">Iniciar Sesión</button>
         </form>
