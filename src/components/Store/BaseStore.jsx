@@ -1,7 +1,7 @@
-import React from "react";
-import InNavbar from "../InNavbar"; // Ruta ajustada
-import SidebarStore from "./SidebarStore";
-import { FaRegUserCircle } from "react-icons/fa";
+import React from 'react';
+import InNavbar from '../InNavBar'; // Ruta correcta
+import SidebarStore from './SidebarStore';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 const BaseStore = ({ userName = "Usuario", userRole = "Cliente" }) => {
   const styles = {
@@ -50,7 +50,7 @@ const BaseStore = ({ userName = "Usuario", userRole = "Cliente" }) => {
           <SidebarStore />
         </aside>
         <main style={styles.main}>
-          {/* Aquí puedes colocar el contenido principal de la tienda */}
+          {/**/}
           <h2>Bienvenido a la Tienda</h2>
           <p>Aquí puedes gestionar tu inventario, pedidos, facturación y estadísticas.</p>
         </main>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Bar, Line } from "react-chartjs-2"; // Para gráficos
-import { Tabs, Tab } from "@/components/ui/tabs"; // Importar sistema de tabs
+import { Tabs, Tab } from '../ui/tabs'; // Ruta correcta
 import "chart.js/auto";
 import BaseStore from './BaseStore'; // Importar BaseStore
 

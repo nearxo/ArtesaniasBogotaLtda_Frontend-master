@@ -62,7 +62,7 @@ const SidebarStore = () => {
   return (
     <aside style={styles.sidebarContainer}>
       <div style={styles.sidebarHeader}>
-        
+        <h1></h1>
       </div>
       <nav style={styles.sidebarNav}>
         <ul style={styles.sidebarList}>

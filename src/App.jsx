@@ -10,7 +10,10 @@ import LogIn from './components/Login';
 import AdminHome from './components/Admin/HomeAdmin';
 import ClientHome from './components/Client/HomeClient';
 import StoreHome from './components/Store/HomeStore';
-
+import Inventory from './components/Store/Inventory';
+import OrdersStore from './components/Store/OrdersStore';
+import Billing from './components/Store/Billing';
+import StoreStats from './components/Store/StoreStats';
 
 function App() {
   return (
@@ -24,10 +27,13 @@ function App() {
         <Route path="/admin/home" element={<AdminHome />} />
         <Route path="/client/home" element={<ClientHome />} />
         <Route path="/store/home" element={<StoreHome />} />
+        <Route path="/store/inventory" element={<Inventory />} />
+        <Route path="/store/ordersstore" element={<OrdersStore />} />
+        <Route path="/store/billing" element={<Billing />} />
+        <Route path="/store/storestats" element={<StoreStats />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
