@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import { FaPlus, FaMinus, FaSave } from 'react-icons/fa';
 import BaseStore from './BaseStore';
 
-const ProductCardStore = ({ name, description, price, image, stock }) => {
+const ProductCardStore = ({ name, description, price, image, stock, onSave }) => {
   const [inventory, setInventory] = useState(stock);
 
   const increaseInventory = () => setInventory((prev) => prev + 1);
   const decreaseInventory = () => setInventory((prev) => (prev > 0 ? prev - 1 : 0));
+  const handleSave = () => onSave(name, inventory);
 
   const styles = {
     card: {
@@ -83,6 +84,9 @@ const ProductCardStore = ({ name, description, price, image, stock }) => {
         <button onClick={increaseInventory} style={styles.button}>
           <FaPlus />
         </button>
+        <button onClick={handleSave} style={styles.button}>
+          <FaSave /> Guardar
+        </button>
       </div>
     </div>
   );
@@ -115,6 +119,14 @@ const Inventory = () => {
       stock: 15,
     },
   ]);
+
+  const handleSave = (productName, newInventory) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.name === productName ? { ...product, stock: newInventory } : product
+      )
+    );
+  };
 
   const inventoryStyles = {
     container: {
@@ -154,6 +166,7 @@ const Inventory = () => {
                 price={product.price}
                 image={product.image}
                 stock={product.stock}
+                onSave={handleSave}
               />
             ))}
           </div>

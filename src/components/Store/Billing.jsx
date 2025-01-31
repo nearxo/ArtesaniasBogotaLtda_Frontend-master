@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaUser, FaBoxOpen } from 'react-icons/fa';
+import { FaUser, FaBoxOpen, FaPlus, FaMinus } from 'react-icons/fa';
 import ProductCardClient from "../Client/ProductCardClient";
 import BaseStore from "./BaseStore";
 
@@ -13,7 +13,7 @@ const Billing = () => {
   const [products, setProducts] = useState([]); // Estado para los productos agregados
   const [productInput, setProductInput] = useState({
     codigo: "",
-    cantidad: "",
+    cantidad: 1,
   });
 
   const handleClientChange = (e) => {
@@ -42,8 +42,22 @@ const Billing = () => {
         image: "src/rsc/product.png",
       };
       setProducts([...products, newProduct]);
-      setProductInput({ codigo: "", cantidad: "" });
+      setProductInput({ codigo: "", cantidad: 1 });
     }
+  };
+
+  const increaseQuantity = () => {
+    setProductInput((prev) => ({
+      ...prev,
+      cantidad: prev.cantidad + 1,
+    }));
+  };
+
+  const decreaseQuantity = () => {
+    setProductInput((prev) => ({
+      ...prev,
+      cantidad: prev.cantidad > 1 ? prev.cantidad - 1 : 1,
+    }));
   };
 
   const styles = {
@@ -93,6 +107,11 @@ const Billing = () => {
         },
       },
     },
+    quantityContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--espaciado-pequeno)',
+    },
   };
 
   return (
@@ -141,15 +160,15 @@ const Billing = () => {
             onChange={handleProductChange}
             style={styles.input}
           />
-          <input
-            type="number"
-            name="cantidad"
-            placeholder="Cantidad"
-            value={productInput.cantidad}
-            onChange={handleProductChange}
-            style={styles.input}
-            min="1"
-          />
+          <div style={styles.quantityContainer}>
+            <button onClick={decreaseQuantity} style={styles.button}>
+              <FaMinus />
+            </button>
+            <span>{productInput.cantidad}</span>
+            <button onClick={increaseQuantity} style={styles.button}>
+              <FaPlus />
+            </button>
+          </div>
           <button onClick={handleAddProduct} style={styles.button}>
             Agregar Producto
           </button>

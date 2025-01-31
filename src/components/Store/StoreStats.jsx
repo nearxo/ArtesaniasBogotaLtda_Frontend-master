@@ -51,7 +51,8 @@ const StoreStats = () => {
   }, []);
 
   // Manejar selección de producto para estadísticas
-  const handleProductSelection = (productName) => {
+  const handleProductSelection = (e) => {
+    const productName = e.target.value;
     setSelectedProduct(
       productStats.find((product) => product.product === productName)
     );
@@ -80,20 +81,6 @@ const StoreStats = () => {
     },
     tabsContainer: {
       marginBottom: 'var(--espaciado-grande)',
-    },
-    tabButton: {
-      padding: 'var(--espaciado-grande)',
-      backgroundColor: 'var(--color-primario)',
-      borderRadius: 'var(--radio-borde)',
-      cursor: 'pointer',
-      transition: 'var(--transicion)',
-      color: 'white',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      '&:hover': {
-        backgroundColor: 'var(--color-secundario)',
-      },
     },
     chartContainer: {
       marginBottom: 'var(--espaciado-grande)',
@@ -129,17 +116,14 @@ const StoreStats = () => {
           <Tab value="product-stats" label="Estadísticas por Producto">
             <div style={styles.tabsContainer}>
               <h3 style={styles.chartTitle}>Selecciona un Producto</h3>
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <select onChange={handleProductSelection} defaultValue="">
+                <option value="" disabled>Seleccione un producto</option>
                 {productStats.map((product, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleProductSelection(product.product)}
-                    style={styles.tabButton}
-                  >
+                  <option key={index} value={product.product}>
                     {product.product}
-                  </button>
+                  </option>
                 ))}
-              </div>
+              </select>
               {selectedProduct && (
                 <div>
                   <h4 className="text-lg font-bold mb-4">

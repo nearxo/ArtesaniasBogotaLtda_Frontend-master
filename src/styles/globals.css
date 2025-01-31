@@ -6,10 +6,10 @@
 /* Variables globales */
 :root {
   /* Colores */
-  --color-primario: #4c3c25;
-  --color-secundario: #8c281f ;
+  --color-primario: #000000;
+  --color-secundario: #544544 ;
   --color-terciario: #bf8c4f ;
-  --color-fondo: #f4e6b8;
+  --color-fondo: #ffffff;
   --color-negro: #261f16;
   --color-destaque: #FF6F61;
   --color-hover: #bf8c80;
