@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { FaUser, FaBoxOpen, FaPlus, FaMinus } from 'react-icons/fa';
-import ProductCardClient from "../Client/ProductCardClient";
+import React, { useState, useEffect } from "react";
+import { FaUser, FaBoxOpen, FaPlus, FaMinus, FaFileInvoiceDollar } from 'react-icons/fa';
+import ProductCardAdmin from "../Admin/ProductCardAdmin";
 import BaseStore from "./BaseStore";
 
 const Billing = () => {
@@ -10,11 +10,20 @@ const Billing = () => {
     telefono: "",
   });
 
-  const [products, setProducts] = useState([]); // Estado para los productos agregados
+  const [clientAdded, setClientAdded] = useState(false);
+  const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState({
     codigo: "",
     cantidad: 1,
   });
+
+  useEffect(() => {
+    // Llamada al backend para obtener los productos
+    fetch('/api/products')
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error('Error al cargar productos:', error));
+  }, []);
 
   const handleClientChange = (e) => {
     const { name, value } = e.target;
@@ -32,18 +41,45 @@ const Billing = () => {
     });
   };
 
+  const handleAddClientInfo = () => {
+    if (clientInfo.cedula && clientInfo.nombre && clientInfo.telefono) {
+      setClientAdded(true);
+    }
+  };
+
   const handleAddProduct = () => {
     if (productInput.codigo && productInput.cantidad > 0) {
-      const newProduct = {
-        codigo: productInput.codigo,
-        cantidad: parseInt(productInput.cantidad),
-        name: "Producto Ejemplo",
-        price: 10000,
-        image: "src/rsc/product.png",
-      };
-      setProducts([...products, newProduct]);
+      const newProduct = products.find(product => product.codigo === productInput.codigo);
+      if (newProduct) {
+        const updatedProduct = {
+          ...newProduct,
+          cantidad: productInput.cantidad,
+        };
+        setProducts([...products, updatedProduct]);
+      } else {
+        console.error('Producto no encontrado');
+      }
       setProductInput({ codigo: "", cantidad: 1 });
     }
+  };
+
+  const handleInvoice = () => {
+    const invoiceData = {
+      clientInfo,
+      products,
+    };
+
+    // Envío de los datos de la factura al backend
+    fetch('/api/invoice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(invoiceData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log('Factura enviada:', data))
+      .catch((error) => console.error('Error al enviar la factura:', error));
   };
 
   const increaseQuantity = () => {
@@ -115,7 +151,6 @@ const Billing = () => {
   };
 
   return (
-    
     <div style={styles.container}>
       <h2 style={styles.title}>Facturación</h2>
 
@@ -146,6 +181,9 @@ const Billing = () => {
             onChange={handleClientChange}
             style={styles.input}
           />
+          <button onClick={handleAddClientInfo} style={styles.button}>
+            Agregar Datos del Cliente
+          </button>
         </div>
       </div>
 
@@ -182,7 +220,7 @@ const Billing = () => {
         ) : (
           <div style={styles.productGrid}>
             {products.map((product, index) => (
-              <ProductCardClient
+              <ProductCardAdmin
                 key={index}
                 name={product.name}
                 price={product.price}
@@ -193,6 +231,10 @@ const Billing = () => {
           </div>
         )}
       </div>
+      
+      <button onClick={handleInvoice} style={styles.button}>
+        <FaFileInvoiceDollar /> Facturar
+      </button>
     </div>
   );
 };

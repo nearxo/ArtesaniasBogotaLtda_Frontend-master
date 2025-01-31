@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMinus, FaSave } from 'react-icons/fa';
-import BaseStore from './BaseStore';
 
-const ProductCardStore = ({ name, description, price, image, stock, onSave }) => {
+const ProductCardStore = ({ product, onSave }) => {
+  const { id, name, description, price, image, stock } = product;
   const [inventory, setInventory] = useState(stock);
 
   const increaseInventory = () => setInventory((prev) => prev + 1);
   const decreaseInventory = () => setInventory((prev) => (prev > 0 ? prev - 1 : 0));
-  const handleSave = () => onSave(name, inventory);
+  const handleSave = () => onSave(id, inventory);
 
   const styles = {
     card: {
@@ -71,7 +71,7 @@ const ProductCardStore = ({ name, description, price, image, stock, onSave }) =>
 
   return (
     <div style={styles.card}>
-      <img src={image || 'src/rsc/product.png'} alt={name} style={styles.image} />
+      <img src={image} alt={name} style={styles.image} />
       <h3 style={styles.title}>{name}</h3>
       <p style={styles.description}>{description}</p>
       <p style={styles.price}>${price.toFixed(2)}</p>
@@ -93,39 +93,34 @@ const ProductCardStore = ({ name, description, price, image, stock, onSave }) =>
 };
 
 const Inventory = () => {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'Producto 1',
-      description: 'Descripción del producto 1',
-      price: 50.0,
-      image: 'src/rsc/product.png',
-      stock: 10,
-    },
-    {
-      id: 2,
-      name: 'Producto 2',
-      description: 'Descripción del producto 2',
-      price: 75.0,
-      image: 'src/rsc/product.png',
-      stock: 5,
-    },
-    {
-      id: 3,
-      name: 'Producto 3',
-      description: 'Descripción del producto 3',
-      price: 100.0,
-      image: 'src/rsc/product.png',
-      stock: 15,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
-  const handleSave = (productName, newInventory) => {
+  useEffect(() => {
+    // Llamada al backend para obtener los productos
+    fetch('/api/products')
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error('Error al cargar productos:', error));
+  }, []);
+
+  const handleSave = (productId, newInventory) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.name === productName ? { ...product, stock: newInventory } : product
+        product.id === productId ? { ...product, stock: newInventory } : product
       )
     );
+
+    // Envío de los cambios al backend
+    fetch(`/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ stock: newInventory }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log('Producto actualizado:', data))
+      .catch((error) => console.error('Error al actualizar producto:', error));
   };
 
   const inventoryStyles = {
@@ -144,34 +139,26 @@ const Inventory = () => {
       gap: 'var(--espaciado-pequeno)',
       '@media(min-width: 640px)': {
         gridTemplateColumns: 'repeat(2, 1fr)',
-        '@media(min-width: 1024px)': {
-          gridTemplateColumns: 'repeat(3, 1fr)',
-        },
+      },
+      '@media(min-width: 1024px)': {
+        gridTemplateColumns: 'repeat(3, 1fr)',
       },
     },
   };
 
   return (
-      <div style={inventoryStyles.container}>
-        <h2 style={inventoryStyles.header}>Inventario</h2>
-        {products.length === 0 ? (
-          <p style={inventoryStyles.loadingText}>Cargando productos...</p>
-        ) : (
-          <div style={inventoryStyles.grid}>
-            {products.map((product) => (
-              <ProductCardStore
-                key={product.id}
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                image={product.image}
-                stock={product.stock}
-                onSave={handleSave}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+    <div style={inventoryStyles.container}>
+      <h2 style={inventoryStyles.header}>Inventario</h2>
+      {products.length === 0 ? (
+        <p style={inventoryStyles.loadingText}>Cargando productos...</p>
+      ) : (
+        <div style={inventoryStyles.grid}>
+          {products.map((product) => (
+            <ProductCardStore key={product.id} product={product} onSave={handleSave} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

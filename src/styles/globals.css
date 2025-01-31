@@ -8,11 +8,11 @@
   /* Colores */
   --color-primario: #000000;
   --color-secundario: #544544 ;
-  --color-terciario: #bf8c4f ;
+  --color-terciario: #2e5164 ;
   --color-fondo: #ffffff;
   --color-negro: #261f16;
-  --color-destaque: #FF6F61;
-  --color-hover: #bf8c80;
+  --color-destaque: #0e0089;
+  --color-hover: #656261;
 
   /* Sombras y bordes */
   --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);
