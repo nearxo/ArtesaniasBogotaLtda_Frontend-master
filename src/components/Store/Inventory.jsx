@@ -140,7 +140,6 @@ const Inventory = () => {
   };
 
   return (
-    <BaseStore>
       <div style={inventoryStyles.container}>
         <h2 style={inventoryStyles.header}>Inventario</h2>
         {products.length === 0 ? (
@@ -160,7 +159,6 @@ const Inventory = () => {
           </div>
         )}
       </div>
-    </BaseStore>
   );
 };
 

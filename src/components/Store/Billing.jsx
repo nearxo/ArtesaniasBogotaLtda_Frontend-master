@@ -96,6 +96,7 @@ const Billing = () => {
   };
 
   return (
+    
     <div style={styles.container}>
       <h2 style={styles.title}>Facturación</h2>
 

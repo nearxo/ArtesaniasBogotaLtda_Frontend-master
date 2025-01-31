@@ -79,7 +79,6 @@ const OrdersStore = () => {
   };
 
   return (
-    <BaseStore>
       <div style={styles.container}>
         <h2 style={styles.header}>Pedidos Pendientes por Enviar</h2>
         {orders.length === 0 ? (
@@ -136,7 +135,6 @@ const OrdersStore = () => {
           </ul>
         )}
       </div>
-    </BaseStore>
   );
 };
 

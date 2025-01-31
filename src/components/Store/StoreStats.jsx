@@ -107,7 +107,6 @@ const StoreStats = () => {
   };
 
   return (
-    <BaseStore>
       <div style={styles.container}>
         <h2 style={styles.header}>Estadísticas de la Tienda</h2>
         <Tabs defaultValue="store-stats">
@@ -198,7 +197,6 @@ const StoreStats = () => {
           </Tab>
         </Tabs>
       </div>
-    </BaseStore>
   );
 };
 
