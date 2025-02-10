@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ClientCard from "./ClientCard";
+import BaseAdmin from "../BaseAdmin"; // Importar BaseAdmin
 
 const Clients = () => {
   const [clients, setClients] = useState([]); // Estado para manejar los datos de los clientes
@@ -33,32 +34,29 @@ const Clients = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Clientes</h2>
+    <BaseAdmin>
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-4">Lista de Clientes</h2>
 
-      {/* Mostrar la ClientCard por defecto si no hay datos */}
-      {clients.length === 0 && (
-        <div className="flex justify-center">
-          <ClientCard />
-        </div>
-      )}
-
-      {/* Mostrar las tarjetas cargadas desde el backend */}
-      {clients.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {clients.map((client) => (
-            <ClientCard
-              key={client.id}
-              name={client.name}
-              email={client.email}
-              phone={client.phone}
-              address={client.address}
-              image={client.image}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+        {/* Si no hay clientes, mostrar un mensaje */}
+        {clients.length === 0 ? (
+          <p className="text-center text-gray-500">No hay clientes registrados.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {clients.map((client) => (
+              <ClientCard
+                key={client.id}
+                name={client.name}
+                email={client.email}
+                phone={client.phone}
+                address={client.address}
+                image={client.image}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </BaseAdmin>
   );
 };
 
