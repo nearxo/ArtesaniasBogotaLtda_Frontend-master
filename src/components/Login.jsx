@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para redirigir según el rol
-import Navbar from './Navbar';
-import '../styles/globals.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -24,9 +22,9 @@ const LogIn = () => {
 
     // Usuarios de prueba
     const users = [
-      { email: 'cliente@gmail.com', password: 'GrupoBArtesanias', role: 'client' },
-      { email: 'administrador@gmail.com', password: 'GrupoBArtesanias', role: 'admin' },
-      { email: 'tienda@gmail.com', password: 'GrupoBArtesanias', role: 'store' },
+      { email: "cliente@gmail.com", password: "GrupoBArtesanias", role: "client" },
+      { email: "administrador@gmail.com", password: "GrupoBArtesanias", role: "admin" },
+      { email: "tienda@gmail.com", password: "GrupoBArtesanias", role: "store" },
     ];
 
     // Validar credenciales
@@ -35,47 +33,109 @@ const LogIn = () => {
     );
 
     if (user) {
-      alert('Inicio de sesión exitoso');
+      alert("Inicio de sesión exitoso");
       // Redirigir según el rol
-      if (user.role === 'admin') navigate('/admin/home');
-      if (user.role === 'client') navigate('/client/home');
-      if (user.role === 'store') navigate('/store/home');
+      if (user.role === "admin") navigate("/admin/home");
+      if (user.role === "client") navigate("/client/home");
+      if (user.role === "store") navigate("/store/home");
     } else {
-      alert('Correo o contraseña incorrectos');
+      alert("Correo o contraseña incorrectos");
     }
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="form-container">
-        <h2>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit} className="form-login">
-          <div className="form-group">
-            <label htmlFor="email">Correo Electrónico:</label>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h2 style={styles.title}>Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.formGroup}>
+            <label htmlFor="email" style={styles.label}>Correo Electrónico:</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
+              style={styles.input}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
+          <div style={styles.formGroup}>
+            <label htmlFor="password" style={styles.label}>Contraseña:</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
+              style={styles.input}
             />
           </div>
-          <button type="submit" className="button">Iniciar Sesión</button>
+          <button type="submit" style={styles.button}>Iniciar Sesión</button>
         </form>
       </div>
-    </>
+    </div>
   );
+};
+
+// 🔹 Estilos en línea
+const styles = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#f4f4f4",
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    padding: "30px",
+    borderRadius: "12px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    width: "350px",
+  },
+  title: {
+    fontFamily: "'Lora', serif",
+    fontSize: "2rem",
+    color: "#333",
+    marginBottom: "20px",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  formGroup: {
+    marginBottom: "15px",
+    textAlign: "left",
+  },
+  label: {
+    display: "block",
+    fontWeight: "bold",
+    marginBottom: "5px",
+    color: "#555",
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    fontSize: "1rem",
+    outline: "none",
+    transition: "border-color 0.3s ease",
+  },
+  button: {
+    backgroundColor: "#000",
+    color: "#fff",
+    padding: "12px",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1rem",
+    transition: "background 0.3s ease",
+  },
+  buttonHover: {
+    backgroundColor: "#544544",
+  },
 };
 
 export default LogIn;
