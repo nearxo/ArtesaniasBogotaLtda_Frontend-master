@@ -1,10 +1,10 @@
 import InNavBar from '../InNavBar'; 
-import SidebarClient from './SidebarClient'; 
-const BaseClient = ({ children }) => {
+import SidebarAdmin from './SidebarAdmin'; 
+const BaseAdmin = ({ children }) => {
     return (
       <div className="flex">
-        {/* Sidebar del cliente */}
-        <SidebarClient />
+        {/* Sidebar del admin */}
+        <SidebarAdmin />
   
         {/* Contenedor principal */}
         <div className="flex-grow">
@@ -17,4 +17,4 @@ const BaseClient = ({ children }) => {
     );
   };
   
-  export default BaseClient;
+  export default BaseAdmin;

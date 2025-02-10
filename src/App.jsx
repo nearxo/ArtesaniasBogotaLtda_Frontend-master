@@ -8,7 +8,6 @@ import Contact from './components/Contact';
 import SignUp from './components/SignUp';
 import LogIn from './components/Login';
 import AdminHome from './components/Admin/HomeAdmin';
-import ClientHome from './components/Client/HomeClient';
 import StoreHome from './components/Store/HomeStore';
 import Inventory from './components/Store/Inventory';
 import OrdersStore from './components/Store/OrdersStore';
@@ -57,7 +56,6 @@ function App() {
             </AdminLayout>
           }
         />
-        <Route path="/client/home" element={<ClientHome />} />
         <Route path="/store/home" element={<StoreHome />} />
         <Route path="/store/inventory" element={<Inventory />} />
         <Route path="/store/ordersstore" element={<OrdersStore />} />

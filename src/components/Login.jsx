@@ -22,7 +22,6 @@ const LogIn = () => {
 
     // Usuarios de prueba
     const users = [
-      { email: "cliente@gmail.com", password: "GrupoBArtesanias", role: "client" },
       { email: "administrador@gmail.com", password: "GrupoBArtesanias", role: "admin" },
       { email: "tienda@gmail.com", password: "GrupoBArtesanias", role: "store" },
     ];
@@ -36,7 +35,6 @@ const LogIn = () => {
       alert("Inicio de sesión exitoso");
       // Redirigir según el rol
       if (user.role === "admin") navigate("/admin/home");
-      if (user.role === "client") navigate("/client/home");
       if (user.role === "store") navigate("/store/home");
     } else {
       alert("Correo o contraseña incorrectos");
