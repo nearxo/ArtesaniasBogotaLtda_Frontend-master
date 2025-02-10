@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/globals.css'; // Asegúrate de importar tus estilos globales
+import './SidebarAdmin.css';
+// import '../styles/globals.css'; // Asegúrate de importar tus estilos globales
 
 const SidebarAdmin = () => {
   return (
@@ -8,7 +9,7 @@ const SidebarAdmin = () => {
       <nav className="sidebar-nav">
         <ul>
           <li>
-            <Link to="/admin/Statistics">Estadísticas de Productos</Link>
+            <Link to="/admin/statistics">Estadísticas</Link>
           </li>
           <li>
             <Link to="/admin/Products">Productos</Link>
@@ -17,10 +18,10 @@ const SidebarAdmin = () => {
             <Link to="/admin/products">Clientes</Link>
           </li>
           <li>
-            <Link to="/admin/products">Empleados</Link>
+            <Link to="/admin/employees">Empleados</Link>
           </li>
           <li>
-            <Link to="/admin/products">Tiendas</Link>
+            <Link to="/admin/stores">Tiendas</Link>
           </li>
         </ul>
       </nav>

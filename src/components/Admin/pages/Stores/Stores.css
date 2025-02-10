@@ -1,0 +1,32 @@
+.stores-container {
+  margin: auto;
+  padding: 20px;
+}
+
+.stores-title {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.add-store-btn {
+  background-color: var(--color-secundario);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.add-store-btn:hover {
+  background-color: var(--color-secundario);
+}
+
+.stores-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}

@@ -1,0 +1,28 @@
+.employees-container {
+  padding: 20px;
+  margin: auto;
+}
+
+.employees-title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.add-employee-btn {
+  background: var(--color-secundario);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.employees-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}

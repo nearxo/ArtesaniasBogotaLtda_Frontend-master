@@ -70,6 +70,10 @@ const InNavbar = ({ userName = "Usuario", userRole = "Cliente" }) => {
       fontSize: 'var(--fuente-normal)',
       transition: 'var(--transicion)',
     },
+    navbarEnd: {
+      display: 'flex',
+      gap: '20px'
+    },
   };
 
   return (
@@ -78,7 +82,7 @@ const InNavbar = ({ userName = "Usuario", userRole = "Cliente" }) => {
         <GiColumnVase style={{ fontSize: 'var(--fuente-grande)', color: 'var(--color-secundario)' }} />
         <span>Artesanías Bogotá</span>
       </div>
-      <div>
+      <div style={styles.navbarEnd}>
         <HiOutlineShoppingCart style={styles.icon} />
         <div style={styles.userSection} onClick={toggleMenu}>
           <FaRegUserCircle style={{ fontSize: 'var(--fuente-mediana)', color: 'var(--color-secundario)' }} />

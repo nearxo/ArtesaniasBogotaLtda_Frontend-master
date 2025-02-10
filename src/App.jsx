@@ -15,6 +15,11 @@ import OrdersStore from './components/Store/OrdersStore';
 import Billing from './components/Store/Billing';
 import StoreStats from './components/Store/StoreStats';
 
+import AdminLayout from './components/Admin/AdminLayout/AdminLayout';
+import Statistics from './components/Admin/pages/Statistics/Statistics';
+import Employees from './components/Admin/pages/Employees/Employees';
+import Stores from './components/Admin/pages/Stores/Stores';
+
 function App() {
   return (
     <Router>
@@ -24,7 +29,38 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/admin/home" element={<AdminHome />} />
+        <Route 
+          path="/admin/home" 
+          element= {
+            <AdminLayout>
+              <AdminHome />
+            </AdminLayout>
+          }
+        />
+        <Route 
+          path="/admin/statistics" 
+          element= {
+            <AdminLayout>
+              <Statistics />
+            </AdminLayout>
+          }
+        />
+        <Route 
+          path="/admin/employees" 
+          element= {
+            <AdminLayout>
+              <Employees />
+            </AdminLayout>
+          }
+        />
+        <Route 
+          path="/admin/stores" 
+          element= {
+            <AdminLayout>
+              <Stores />
+            </AdminLayout>
+          }
+        />
         <Route path="/client/home" element={<ClientHome />} />
         <Route path="/store/home" element={<StoreHome />} />
         <Route path="/store/inventory" element={<Inventory />} />
