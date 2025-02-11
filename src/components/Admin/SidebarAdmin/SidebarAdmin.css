@@ -1,10 +1,103 @@
+/* Estilos para la barra lateral */
 .sidebar {
   height: 100%;
-  width: 200px;
+  width: 250px; /* Ampliando un poco el ancho */
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: var(--color-fondo); /* Uso del color de fondo global */
+  box-shadow: var(--sombra-suave); /* Sombra suave para darle profundidad */
+  border-radius: var(--radio-borde); /* Bordes redondeados */
+  transition: var(--transicion); /* Transición suave */
+  padding: var(--espaciado-pequeno); /* Espaciado interno */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuir espacio entre elementos */
+  background-image: linear-gradient(to bottom, var(--color-fondo), var(--color-hover)); /* Gradiente de fondo */
+  background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png'); /* Textura rústica */
+}
+
+/* Encabezado de la barra lateral */
+.sidebar-header {
+  font-family: var(--fuente-principal);
+  color: var(--color-primario);
+  font-size: var(--fuente-mediana);
+  text-align: center;
+  padding: var(--espaciado-pequeno);
+  border-bottom: 2px solid var(--color-hover);
+  text-transform: uppercase; /* Mayúsculas para el encabezado */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  background-color: var(--color-secundario); /* Fondo del encabezado */
+  color: var(--color-fondo); /* Color de texto */
+  box-shadow: var(--sombra-suave); /* Sombra para el encabezado */
+}
+
+/* Estilos para los elementos de navegación dentro de la barra lateral */
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
 }
 
 .sidebar-nav li {
-  padding-left: 10px;
+  padding: var(--espaciado-pequeno); /* Espaciado uniforme */
+  font-family: var(--fuente-secundaria); /* Uso de la fuente secundaria global */
+  color: var(--color-negro); /* Uso del color negro global */
+  border-bottom: 1px solid var(--color-hover); /* Línea divisoria entre elementos */
+  transition: var(--transicion); /* Transición suave */
+  text-align: left; /* Alineación del texto */
+  display: flex;
+  align-items: center; /* Alinear íconos y texto */
+  background-color: var(--color-fondo); /* Fondo del elemento */
+  margin: var(--espaciado-pequeno) 0; /* Espaciado entre elementos */
+  border-left: 4px solid var(--color-primario); /* Barra decorativa rústica */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+.sidebar-nav li:hover {
+  background-color: var(--color-hover); /* Fondo de hover */
+  color: var(--color-destaque); /* Color de texto en hover */
+  border-left: 4px solid var(--color-destaque); /* Indicador visual de selección */
+  transform: scale(1.05); /* Efecto de escala en hover */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra aumentada en hover */
+}
+
+/* Estilos para enlaces dentro de la barra lateral */
+.sidebar-nav li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: var(--espaciado-pequeno) 0;
+  width: 100%;
+}
+
+/* Estilos para íconos dentro de la barra lateral */
+.sidebar-nav li i {
+  margin-right: var(--espaciado-pequeno); /* Espaciado entre ícono y texto */
+}
+
+/* Estilos para el pie de página de la barra lateral */
+.sidebar-footer {
+  font-family: var(--fuente-secundaria);
+  color: var(--color-secundario);
+  text-align: center;
+  padding: var(--espaciado-pequeno);
+  border-top: 2px solid var(--color-hover);
+  background-color: var(--color-fondo); /* Fondo del pie de página */
+  box-shadow: var(--sombra-suave); /* Sombra para el pie de página */
+}
+
+/* Estilos para botones */
+button {
+  font-family: var(--fuente-secundaria);
+  background-color: var(--color-primario);
+  color: white;
+  padding: var(--espaciado-pequeno) var(--espaciado-grande);
+  border: none;
+  border-radius: 15px; /* Bordes redondeados */
+  cursor: pointer;
+  transition: var(--transicion);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para los botones */
+}
+
+button:hover {
+  background-color: var(--color-secundario);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra aumentada en hover */
 }

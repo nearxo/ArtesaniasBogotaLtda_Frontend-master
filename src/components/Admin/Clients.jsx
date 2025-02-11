@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ClientCard from "./ClientCard";
-// import BaseAdmin from "../BaseAdmin"; // Importar BaseAdmin
+import { FaUsers } from "react-icons/fa"; // Ícono cuando no hay clientes
 
 const Clients = () => {
-  const [clients, setClients] = useState([]); // Estado para manejar los datos de los clientes
+  const [clients, setClients] = useState([]);
 
-  // Simulación de datos del backend
   useEffect(() => {
-    // Reemplaza esto con una llamada real al backend
     const fetchClients = async () => {
       const backendData = [
         {
@@ -27,34 +25,38 @@ const Clients = () => {
           image: "src/rsc/user.jpg",
         },
       ];
-      setClients(backendData);
+      setTimeout(() => setClients(backendData), 500);
     };
 
     fetchClients();
   }, []);
 
   return (
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Lista de Clientes</h2>
+    <div className="p-8 bg-gray-100 rounded-xl shadow-md max-w-7xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        Lista de Clientes
+      </h2>
 
-        {/* Si no hay clientes, mostrar un mensaje */}
-        {clients.length === 0 ? (
-          <p className="text-center text-gray-500">No hay clientes registrados.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clients.map((client) => (
-              <ClientCard
-                key={client.id}
-                name={client.name}
-                email={client.email}
-                phone={client.phone}
-                address={client.address}
-                image={client.image}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {clients.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-60 text-gray-500">
+          <FaUsers className="text-6xl mb-2" />
+          <p>No hay clientes registrados.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+          {clients.map((client) => (
+            <ClientCard
+              key={client.id}
+              name={client.name}
+              email={client.email}
+              phone={client.phone}
+              address={client.address}
+              image={client.image}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

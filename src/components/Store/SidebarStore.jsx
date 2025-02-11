@@ -4,97 +4,113 @@ import { FaBox, FaClipboardList, FaChartLine, FaFileInvoiceDollar } from 'react-
 
 const SidebarStore = () => {
   const styles = {
-    sidebarContainer: {
+    sidebar: {
+      height: '100vh',
       width: '250px',
       backgroundColor: 'var(--color-fondo)',
-      padding: 'var(--espaciado-pequeno)',
       boxShadow: 'var(--sombra-suave)',
       borderRadius: 'var(--radio-borde)',
+      padding: 'var(--espaciado-pequeno)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      height: '100vh',
     },
-    sidebarHeader: {
-      fontFamily: 'var(--fuente-principal)',
-      fontSize: 'var(--fuente-mediana-grande)',
-      color: 'var(--color-primario)',
-      marginBottom: 'var(--espaciado-grande)',
-      textAlign: 'center',
-    },
-    sidebarNav: {
+    nav: {
       flexGrow: 1,
     },
-    sidebarList: {
+    list: {
       listStyle: 'none',
       padding: 0,
       margin: 0,
     },
-    sidebarItem: {
-      marginBottom: 'var(--espaciado-pequeno)',
-    },
-    sidebarLink: {
-      textDecoration: 'none',
-      fontSize: 'var(--fuente-normal)',
-      fontFamily: 'var(--fuente-principal)',
-      color: 'var(--color-negro)',
+    listItem: {
       display: 'flex',
       alignItems: 'center',
       padding: 'var(--espaciado-pequeno)',
-      borderRadius: 'var(--radio-borde)',
+      borderLeft: '4px solid var(--color-primario)',
+      backgroundColor: 'var(--color-fondo)',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
       transition: 'var(--transicion)',
+      marginBottom: 'var(--espaciado-pequeno)',
     },
-    sidebarIcon: {
-      marginRight: 'var(--espaciado-pequeno)',
+    listItemHover: {
+      backgroundColor: 'var(--color-hover)',
+      borderLeft: '4px solid var(--color-destaque)',
+      transform: 'scale(1.05)',
+    },
+    link: {
+      textDecoration: 'none',
+      color: 'inherit',
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      fontSize: 'var(--fuente-normal)',
+      fontFamily: 'var(--fuente-principal)',
+      padding: 'var(--espaciado-pequeno) 0',
+    },
+    icon: {
       fontSize: 'var(--fuente-mediana)',
+      marginRight: 'var(--espaciado-pequeno)',
       color: 'var(--color-primario)',
     },
-    sidebarFooter: {
+    footer: {
       textAlign: 'center',
-      fontFamily: 'var(--fuente-principal)',
       fontSize: 'var(--fuente-pequena)',
+      fontFamily: 'var(--fuente-principal)',
       color: 'var(--color-negro)',
       padding: 'var(--espaciado-pequeno)',
-      borderTop: `1px solid var(--color-hover)`,
-    }
+      borderTop: '2px solid var(--color-hover)',
+    },
   };
 
   return (
-    <aside style={styles.sidebarContainer}>
-      <div style={styles.sidebarHeader}>
-        <h1></h1>
-      </div>
-      <nav style={styles.sidebarNav}>
-        <ul style={styles.sidebarList}>
-          <li style={styles.sidebarItem}>
-            <Link to="/store/inventory" style={styles.sidebarLink}>
-              <FaBox style={styles.sidebarIcon} />
+    <aside style={styles.sidebar}>
+      <div style={styles.header}>Tienda</div>
+      <nav style={styles.nav}>
+        <ul style={styles.list}>
+          <li
+            style={styles.listItem}
+            onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.listItemHover)}
+            onMouseLeave={(e) => Object.assign(e.currentTarget.style, styles.listItem)}
+          >
+            <Link to="/store/inventory" style={styles.link}>
+              <FaBox style={styles.icon} />
               Inventario
             </Link>
           </li>
-          <li style={styles.sidebarItem}>
-            <Link to="/store/ordersstore" style={styles.sidebarLink}>
-              <FaClipboardList style={styles.sidebarIcon} />
+          <li
+            style={styles.listItem}
+            onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.listItemHover)}
+            onMouseLeave={(e) => Object.assign(e.currentTarget.style, styles.listItem)}
+          >
+            <Link to="/store/ordersstore" style={styles.link}>
+              <FaClipboardList style={styles.icon} />
               Pedidos
             </Link>
           </li>
-          <li style={styles.sidebarItem}>
-            <Link to="/store/billing" style={styles.sidebarLink}>
-              <FaFileInvoiceDollar style={styles.sidebarIcon} />
+          <li
+            style={styles.listItem}
+            onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.listItemHover)}
+            onMouseLeave={(e) => Object.assign(e.currentTarget.style, styles.listItem)}
+          >
+            <Link to="/store/billing" style={styles.link}>
+              <FaFileInvoiceDollar style={styles.icon} />
               Facturar Pedido
             </Link>
           </li>
-          <li style={styles.sidebarItem}>
-            <Link to="/store/storestats" style={styles.sidebarLink}>
-              <FaChartLine style={styles.sidebarIcon} />
+          <li
+            style={styles.listItem}
+            onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.listItemHover)}
+            onMouseLeave={(e) => Object.assign(e.currentTarget.style, styles.listItem)}
+          >
+            <Link to="/store/storestats" style={styles.link}>
+              <FaChartLine style={styles.icon} />
               Estadísticas de Tienda
             </Link>
           </li>
         </ul>
       </nav>
-      <footer style={styles.sidebarFooter}>
-        © 2025 Tienda Store
-      </footer>
+      <footer style={styles.footer}>© 2025 Tienda Store</footer>
     </aside>
   );
 };
