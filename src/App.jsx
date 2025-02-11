@@ -18,6 +18,8 @@ import AdminLayout from './components/Admin/AdminLayout/AdminLayout';
 import Statistics from './components/Admin/pages/Statistics/Statistics';
 import Employees from './components/Admin/pages/Employees/Employees';
 import Stores from './components/Admin/pages/Stores/Stores';
+import Products from './components/Admin/Products';
+import Clients from './components/Admin/Clients';
 
 function App() {
   return (
@@ -53,6 +55,22 @@ function App() {
           element= {
             <AdminLayout>
               <Stores />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/products" 
+          element= {
+            <AdminLayout>
+              <Products />
+            </AdminLayout>
+          }
+        />
+        <Route 
+          path="/admin/clients" 
+          element= {
+            <AdminLayout>
+              <Clients />
             </AdminLayout>
           }
         />

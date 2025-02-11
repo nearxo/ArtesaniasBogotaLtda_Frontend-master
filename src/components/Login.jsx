@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import loginBg from "../assets/loginBg.jpg";
 
 const LogIn = () => {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const LogIn = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, backgroundImage: `url(${loginBg})` }}>
       <div style={styles.card}>
         <h2 style={styles.title}>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
@@ -82,7 +83,10 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: "#f4f4f4",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    position: "relative",
   },
   card: {
     backgroundColor: "#ffffff",

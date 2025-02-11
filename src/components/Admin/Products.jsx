@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
-import BaseAdmin from '../BaseAdmin';
+// import BaseAdmin from '../BaseAdmin';
 
 const Products = () => {
   const [products, setProducts] = useState([
@@ -67,7 +67,6 @@ const Products = () => {
   };
 
   return (
-    <BaseAdmin>
       <div className="p-4">
         <h2 className="text-2xl font-semibold mb-4">Gestión de Productos</h2>
 
@@ -163,7 +162,6 @@ const Products = () => {
           ))}
         </div>
       </div>
-    </BaseAdmin>
   );
 };
 

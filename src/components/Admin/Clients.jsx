@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ClientCard from "./ClientCard";
-import BaseAdmin from "../BaseAdmin"; // Importar BaseAdmin
+// import BaseAdmin from "../BaseAdmin"; // Importar BaseAdmin
 
 const Clients = () => {
   const [clients, setClients] = useState([]); // Estado para manejar los datos de los clientes
@@ -34,7 +34,6 @@ const Clients = () => {
   }, []);
 
   return (
-    <BaseAdmin>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Lista de Clientes</h2>
 
@@ -56,7 +55,6 @@ const Clients = () => {
           </div>
         )}
       </div>
-    </BaseAdmin>
   );
 };
 
