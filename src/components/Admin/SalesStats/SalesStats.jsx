@@ -2,13 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./SalesStats.css";
 
-const fakeData = [
-  { product: "Laptop HP", sales: 120 },
-  { product: "Mouse Logitech", sales: 85 },
-  { product: "Teclado Mecánico", sales: 60 },
-  { product: "Monitor Samsung", sales: 45 },
-  { product: "Auriculares Sony", sales: 30 },
-];
 
 const SalesStats = () => {
   const [salesData, setSalesData] = useState([]);
@@ -16,11 +9,10 @@ const SalesStats = () => {
   useEffect(() => {
     const fetchSalesData = async () => {
       try {
-        // const response = await axios.get("");
-        // setSalesData(Array.isArray(response.data) ? response.data : []);
+         const response = await axios.get("https://backend-vercel-lime.vercel.app/Angie/salesStats");
+         setSalesData(Array.isArray(response.data) ? response.data : []);
 
-        const data = fakeData;
-        setSalesData(data);
+
       } catch (error) {
         console.error("Error obteniendo top de ventas:", error);
         setSalesData([]);

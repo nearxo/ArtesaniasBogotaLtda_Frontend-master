@@ -1,115 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { Bar, Line } from "react-chartjs-2"; // Para gráficos
-import { Tabs, Tab } from '../ui/tabs'; // Ruta correcta
+import axios from "axios";
+import { Bar, Line } from "react-chartjs-2";
+import { Tabs, Tab } from "../ui/tabs"
+import BaseStore from "./BaseStore";
 import "chart.js/auto";
 
 const StoreStats = () => {
-  const [storeStats, setStoreStats] = useState([]);
-  const [monthlyStoreStats, setMonthlyStoreStats] = useState([]);
+  const [storeStats, setStoreStats] = useState([]); // Ahora se obtiene de la API
   const [productStats, setProductStats] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const months = Array.from({ length: 12 }, (_, i) => {
-    const date = new Date();
-    date.setMonth(date.getMonth() - (11 - i)); // Retrocede 11 meses hacia atrás
-    return date.toLocaleString('es-CO', { month: 'long', year: 'numeric' });
-  });
-
+  // Obtener estadísticas de ventas mensuales
   useEffect(() => {
     const fetchStoreStats = async () => {
-      // Llamada real al backend
-      const response = await fetch('/api/store-stats'); // Reemplaza esta URL por la tuya
-      const data = await response.json();
-      setStoreStats(data.sort((a, b) => b.sold - a.sold)); // Ordenar por vendidos
+      try {
+        const response = await axios.get("https://backend-vercel-lime.vercel.app/Angie/ventas-mensuales");
+        setStoreStats(response.data); // Guardar la respuesta en el estado
+      } catch (error) {
+        console.error("Error al obtener estadísticas de ventas:", error);
+      }
     };
-
-    const fetchMonthlyStoreStats = async () => {
-      // Llamada real al backend
-      const response = await fetch('/api/monthly-store-stats'); // Reemplaza esta URL por la tuya
-      const data = await response.json();
-      setMonthlyStoreStats(data);
-    };
-
     fetchStoreStats();
-    fetchMonthlyStoreStats();
   }, []);
 
+  // Obtener historial de productos vendidos
   useEffect(() => {
     const fetchProductStats = async () => {
-      // Llamada real al backend
-      const response = await fetch('/api/product-stats'); // Reemplaza esta URL por la tuya
-      const data = await response.json();
-      setProductStats(data);
+      try {
+        const response = await axios.get("https://backend-vercel-lime.vercel.app/Angie/historialProductos/historial");
+        setProductStats(response.data);
+      } catch (error) {
+        console.error("Error al obtener estadísticas de productos:", error);
+      }
     };
     fetchProductStats();
-  }, [months]);
+  }, []);
 
-  const handleProductSelection = (e) => {
-    const productName = e.target.value;
-    setSelectedProduct(
-      productStats.find((product) => product.product === productName)
-    );
-  };
-
-  const styles = {
-    container: {
-      padding: 'var(--espaciado-grande)',
-    },
-    header: {
-      fontSize: 'var(--fuente-mediana-grande)',
-      fontWeight: 'bold',
-      marginBottom: 'var(--espaciado-pequeno)',
-      color: 'var(--color-primario)',
-    },
-    productList: {
-      listStyle: 'none',
-      padding: 0,
-      marginBottom: 'var(--espaciado-grande)',
-    },
-    productItem: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      padding: 'var(--espaciado-pequeno) 0',
-      borderBottom: '1px solid var(--color-hover)',
-    },
-    tabsContainer: {
-      marginBottom: 'var(--espaciado-grande)',
-    },
-    chartContainer: {
-      marginBottom: 'var(--espaciado-grande)',
-    },
-    chartTitle: {
-      fontSize: 'var(--fuente-mediana)',
-      fontWeight: 'bold',
-      marginBottom: 'var(--espaciado-pequeno)',
-      color: 'var(--color-primario)',
-    },
+  // Manejar selección de producto
+  const handleProductSelection = (productName) => {
+    const foundProduct = productStats.find((product) => product.product === productName);
+    setSelectedProduct(foundProduct || null);
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.header}>Estadísticas de la Tienda</h2>
+    <BaseStore>
+      <h2>Estadísticas de la Tienda</h2>
       <Tabs defaultValue="store-stats">
         <Tab value="store-stats" label="Estadísticas de Tienda">
-          <div style={styles.tabsContainer}>
-            <h3 style={styles.chartTitle}>Productos Ordenados</h3>
-            <ul style={styles.productList}>
-              {storeStats.map((product, index) => (
-                <li key={index} style={styles.productItem}>
-                  <span>{product.name}</span>
-                  <span>Vendidos: {product.sold}</span>
-                </li>
-              ))}
-            </ul>
-            <div style={styles.chartContainer}>
-              <h5 style={styles.chartTitle}>Ventas Mensuales</h5>
+          <h3>Productos Vendidos Mensualmente</h3>
+          <div style={styles.chartContainer}>
+            {storeStats.length > 0 ? (
               <Bar
                 data={{
-                  labels: monthlyStoreStats.map((data) => data.month),
+                  labels: storeStats.map((data) => data.month),
                   datasets: [
                     {
-                      label: "Ventas Totales",
-                      data: monthlyStoreStats.map((data) => data.totalSales),
+                      label: "Ventas Mensuales",
+                      data: storeStats.map((data) => data.sales),
                       backgroundColor: "rgba(75, 192, 192, 0.5)",
                       borderColor: "rgba(75, 192, 192, 1)",
                       borderWidth: 2,
@@ -117,89 +64,85 @@ const StoreStats = () => {
                   ],
                 }}
               />
-            </div>
-            <div style={styles.chartContainer}>
-              <h5 style={styles.chartTitle}>Ingresos Mensuales</h5>
-              <Line
-                data={{
-                  labels: monthlyStoreStats.map((data) => data.month),
-                  datasets: [
-                    {
-                      label: "Ingresos Totales",
-                      data: monthlyStoreStats.map((data) => data.totalRevenue),
-                      backgroundColor: "rgba(54, 162, 235, 0.5)",
-                      borderColor: "rgba(54, 162, 235, 1)",
-                      borderWidth: 2,
-                    },
-                  ],
-                }}
-              />
-            </div>
-          </div>
-        </Tab>
-        <Tab value="product-stats" label="Estadísticas por Producto">
-          <div style={styles.tabsContainer}>
-            <h3 style={styles.chartTitle}>Selecciona un Producto</h3>
-            <select onChange={handleProductSelection} defaultValue="">
-              <option value="" disabled>Seleccione un producto</option>
-              {productStats.map((product, index) => (
-                <option key={index} value={product.product}>
-                  {product.product}
-                </option>
-              ))}
-            </select>
-            {selectedProduct && (
-              <div>
-                <h4 className="text-lg font-bold mb-4">
-                  Estadísticas para: {selectedProduct.product}
-                </h4>
-                <div style={styles.chartContainer}>
-                  <h5 style={styles.chartTitle}>Precio Histórico</h5>
-                  <Line
-                    data={{
-                      labels: selectedProduct.monthlyData.map(
-                        (data) => data.month
-                      ),
-                      datasets: [
-                        {
-                          label: "Precio",
-                          data: selectedProduct.monthlyData.map((data) => data.price),
-                          backgroundColor: "rgba(54, 162, 235, 0.5)",
-                          borderColor: "rgba(54, 162, 235, 1)",
-                          borderWidth: 2,
-                        },
-                      ],
-                    }}
-                  />
-                </div>
-                <div style={styles.chartContainer}>
-                  <h5 style={styles.chartTitle}>Ventas Mensuales</h5>
-                  <Bar
-                    data={{
-                      labels: selectedProduct.monthlyData.map(
-                        (data) => data.month
-                      ),
-                      datasets: [
-                        {
-                          label: "Cantidad Vendida",
-                          data: selectedProduct.monthlyData.map(
-                            (data) => data.sold
-                          ),
-                          backgroundColor: "rgba(75, 192, 192, 0.5)",
-                          borderColor: "rgba(75, 192, 192, 1)",
-                          borderWidth: 2,
-                        },
-                      ],
-                    }}
-                  />
-                </div>
-              </div>
+            ) : (
+              <p>Cargando datos...</p>
             )}
           </div>
         </Tab>
+
+        <Tab value="product-stats" label="Estadísticas por Producto">
+          <h3>Selecciona un Producto</h3>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            {productStats.map((product, index) => (
+              <button key={index} onClick={() => handleProductSelection(product.product)} style={styles.tabButton}>
+                {product.product}
+              </button>
+            ))}
+          </div>
+
+          {selectedProduct && selectedProduct.monthlyData && (
+            <div>
+              <h4>Estadísticas para: {selectedProduct.product}</h4>
+              <div style={styles.chartContainer}>
+                <h5>Precio Histórico</h5>
+                <Line
+                  data={{
+                    labels: selectedProduct.monthlyData.map((data) => data.month),
+                    datasets: [
+                      {
+                        label: "Precio",
+                        data: selectedProduct.monthlyData.map((data) => data.price),
+                        backgroundColor: "rgba(54, 162, 235, 0.5)",
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        borderWidth: 2,
+                      },
+                    ],
+                  }}
+                />
+              </div>
+              <div style={styles.chartContainer}>
+                <h5>Ventas Mensuales</h5>
+                <Bar
+                  data={{
+                    labels: selectedProduct.monthlyData.map((data) => data.month),
+                    datasets: [
+                      {
+                        label: "Cantidad Vendida",
+                        data: selectedProduct.monthlyData.map((data) => data.sold),
+                        backgroundColor: "rgba(75, 192, 192, 0.5)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 2,
+                      },
+                    ],
+                  }}
+                />
+              </div>
+            </div>
+          )}
+        </Tab>
       </Tabs>
-    </div>
+    </BaseStore>
   );
+};
+
+// 🔹 Estilos en línea
+const styles = {
+  tabButton: {
+    padding: "10px",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    transition: "background 0.3s ease",
+  },
+  chartContainer: {
+    marginTop: "20px",
+    padding: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+  },
 };
 
 export default StoreStats;

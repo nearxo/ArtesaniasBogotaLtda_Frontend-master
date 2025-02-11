@@ -14,7 +14,7 @@ const EmployeeCard = ({
     <div className="employee-card">
       <img src={image} alt="Empleado" className="employee-image" />
       <h3 className="employee-name">{name}</h3>
-      <p className="employee-position">{position}</p>
+      <p className="employee-position">  {position === 2 ? "Administrador de Puesto" : position === 3 ? "Gerente" : "Otro"}</p>
       <p className="employee-info">{email}</p>
       <p className="employee-info">{phone}</p>
 

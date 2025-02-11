@@ -3,7 +3,7 @@ import EmployeeCard from "../../EmployeeCard/EmployeeCard";
 import EmployeeFormModal from "../../EmployeeFormModal/EmployeeFromModal";
 import ConfirmDeleteModal from "../../../ui/ConfirmDeleteModal/ConfirmDeleteModal";
 import "./Employees.css";
-
+import axios from "axios";
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -13,13 +13,12 @@ const Employees = () => {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      // const response = await axios.get('');
-      // setEmployees(response.data);
-      const fakeData = [
-        { id: 1, name: "Carlos Sánchez", position: "Gerente de Ventas", email: "carlos.sanchez@example.com", phone: "300-456-7890", image: "" },
-        { id: 2, name: "Laura Gómez", position: "Asistente Administrativa", email: "laura.gomez@example.com", phone: "320-654-0987" },
-      ];
-      setEmployees(fakeData);
+      try {
+        const response = await axios.get('https://back-artesanias-vue.vercel.app/Usuarios/admins');
+        setEmployees(response.data.usuarios); // Accede a "usuarios"
+      } catch (error) {
+        console.error("Error al obtener empleados:", error);
+      }
     };
     fetchEmployees();
   }, []);
@@ -44,12 +43,12 @@ const Employees = () => {
       //TODO: Implementar llamada a API
       if (employee.id) {
         // Actualizar empleado
-        // const response = await axios.put(`api/${employee.id}`, employee);
-        // setEmployees(employees.map((emp) => (emp.id === employee.id ? response.data : emp)));
+        const response = await axios.put(`https://back-artesanias-vue.vercel.app/Usuarios/usuarios/${employee.idusuario}`, employee);
+         setEmployees(employees.map((emp) => (emp.id === employee.id ? response.data : emp)));
       } else {
         // Crear nuevo empleado
-        // const response = await axios.post('', employee);
-        // setEmployees([...employees, response.data]);
+        const response = await axios.post('', employee);
+         setEmployees([...employees, response.data]);
       }
       setModalOpen(false);
     } catch (error) {
@@ -59,8 +58,8 @@ const Employees = () => {
   
   const handleConfirmDelete = async () => {
     try {
-      // await axios.delete(`${API_URL}/${employeeToDelete.id}`);
-      // setEmployees(employees.filter((emp) => emp.id !== employeeToDelete.id));
+      await axios.delete(`https://back-artesanias-vue.vercel.app/Usuarios/usuarios/${employeeToDelete.id}`,employeeToDelete);
+      setEmployees(employees.filter((emp) => emp.id !== employeeToDelete.id));
       setDeleteModalOpen(false);
     } catch (error) {
       console.error("Error al eliminar empleado:", error);
@@ -75,8 +74,10 @@ const Employees = () => {
       <div className="employees-grid">
         {employees.map((employee) => (
           <EmployeeCard
-            key={employee.id}
-            {...employee}
+            key={employee.idusuario} // Usa el id correcto
+            name={employee.usuario} // Muestra el usuario
+            position={employee.idrol} // Muestra el estilo
+            email={employee.correo} // Muestra el correo
             onEdit={() => handleEditEmployee(employee)}
             onDelete={() => handleDeleteEmployee(employee)}
           />

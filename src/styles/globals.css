@@ -1,17 +1,17 @@
 /* globals.css */
-/*src\styles\globals.css*/
-/* Importar fuentes de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
 
+/* Importar fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Molengo&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Copse&family=El+Messiri:wght@400..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Irish+Grover&family=Sixtyfour+Convergence&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap');
 /* Variables globales */
 :root {
   /* Colores */
   --color-primario: #000000;
   --color-secundario: #544544 ;
-  --color-terciario: #2e5164 ;
+  --color-terciario: #ff0000 ;
   --color-fondo: #ffffff;
   --color-negro: #261f16;
-  --color-destaque: #0e0089;
+  --color-destaque: #ff0000;
   --color-hover: #656261;
 
   /* Sombras y bordes */
@@ -21,9 +21,9 @@
   /* Transiciones */
   --transicion: all 0.3s ease-in-out;
 
-  /* Tipografía */
+  /* Tipografías */
   --fuente-principal: 'PT Sans', sans-serif;
-  --fuente-secundaria: 'PT Sans', sans-serif;
+  --fuente-secundaria: 'El Messiri', sans-serif;
 
   /* Tamaños de Tipografía */
   --fuente-grande: 3rem; /* Para títulos principales */

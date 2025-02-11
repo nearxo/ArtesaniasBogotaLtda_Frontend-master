@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ClientCard from "./ClientCard";
 import { FaUsers } from "react-icons/fa"; // Ícono cuando no hay clientes
@@ -7,25 +8,20 @@ const Clients = () => {
 
   useEffect(() => {
     const fetchClients = async () => {
-      const backendData = [
-        {
-          id: 1,
-          name: "Juan Pérez",
-          email: "juan.perez@example.com",
-          phone: "300-123-4567",
-          address: "Calle 123, Bogotá",
-          image: "src/rsc/user.jpg",
-        },
-        {
-          id: 2,
-          name: "María López",
-          email: "maria.lopez@example.com",
-          phone: "300-765-4321",
-          address: "Carrera 45, Medellín",
-          image: "src/rsc/user.jpg",
-        },
-      ];
-      setTimeout(() => setClients(backendData), 500);
+      try {
+        const response = await axios.get("https://back-artesanias-vue.vercel.app/Usuarios/usuarios");
+        const clientsData = response.data.usuarios.map((user) => ({
+          id: user.idusuario,
+          name: `${user.usuario}`, // No hay un campo de nombre, así que usamos un valor genérico
+          email: user.correo || "Correo no disponible", // No hay teléfono en la API, puedes cambiarlo si se agrega
+          address: user.nombrelugar ? `Lugar ID: ${user.nombrelugar}` : "Sin dirección",
+          image: "/assets/user.jpg", // Imagen por defecto
+        }));
+
+        setClients(clientsData);
+      } catch (error) {
+        console.error("Error al obtener clientes:", error);
+      }
     };
 
     fetchClients();
@@ -46,11 +42,10 @@ const Clients = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
           {clients.map((client) => (
             <ClientCard
-              key={client.id}
+              key={client.idusuario}
               name={client.name}
               email={client.email}
-              phone={client.phone}
-              address={client.address}
+              address={client.nombrelugar}
               image={client.image}
             />
           ))}

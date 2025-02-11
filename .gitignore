@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+Store.zip
+src/App.jsx
+src/App.jsx

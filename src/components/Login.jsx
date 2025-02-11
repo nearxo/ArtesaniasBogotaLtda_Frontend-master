@@ -2,43 +2,52 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginBg from "../assets/loginBg.jpg";
 
-const LogIn = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+const API_URL = "https://back-artesanias-vue.vercel.app/Login";
 
+const LogIn = () => {
+  const [formData, setFormData] = useState({ usuario: "", contrasena: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // Usuarios de prueba
-    const users = [
-      { email: "administrador@gmail.com", password: "GrupoBArtesanias", role: "admin" },
-      { email: "tienda@gmail.com", password: "GrupoBArtesanias", role: "store" },
-    ];
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    // Validar credenciales
-    const user = users.find(
-      (u) => u.email === formData.email && u.password === formData.password
-    );
+      const data = await response.json();
 
-    if (user) {
-      alert("Inicio de sesión exitoso");
-      // Redirigir según el rol
-      if (user.role === "admin") navigate("/admin/home");
-      if (user.role === "store") navigate("/store/home");
-    } else {
-      alert("Correo o contraseña incorrectos");
+      if (response.ok && data.estado) {
+        // Guardar datos en sessionStorage
+        sessionStorage.setItem("idusuario", data.idusuario);
+        sessionStorage.setItem("idrol", data.idrol);
+        sessionStorage.setItem("idlugar", data.idlugar);
+        sessionStorage.setItem("usuario", data.usuario);
+        sessionStorage.setItem("correo", data.correo);
+
+        alert("Inicio de sesión exitoso");
+
+        // Redirigir según idrol
+        if (data.idrol === 1) navigate("/admin/home");
+        if (data.idrol === 2) navigate("/store/home");
+      } else {
+        alert(data.mensaje || "Error en el inicio de sesión");
+      }
+    } catch (error) {
+      console.error("Error en el inicio de sesión:", error);
+      alert("Hubo un problema al conectar con el servidor");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,28 +57,30 @@ const LogIn = () => {
         <h2 style={styles.title}>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.formGroup}>
-            <label htmlFor="email" style={styles.label}>Correo Electrónico:</label>
+            <label htmlFor="usuario" style={styles.label}>Usuario:</label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="usuario"
+              value={formData.usuario}
               onChange={handleChange}
               required
               style={styles.input}
             />
           </div>
           <div style={styles.formGroup}>
-            <label htmlFor="password" style={styles.label}>Contraseña:</label>
+            <label htmlFor="contrasena" style={styles.label}>Contraseña:</label>
             <input
               type="password"
-              name="password"
-              value={formData.password}
+              name="contrasena"
+              value={formData.contrasena}
               onChange={handleChange}
               required
               style={styles.input}
             />
           </div>
-          <button type="submit" style={styles.button}>Iniciar Sesión</button>
+          <button type="submit" style={styles.button} disabled={loading}>
+            {loading ? "Cargando..." : "Iniciar Sesión"}
+          </button>
         </form>
       </div>
     </div>
@@ -134,9 +145,6 @@ const styles = {
     cursor: "pointer",
     fontSize: "1rem",
     transition: "background 0.3s ease",
-  },
-  buttonHover: {
-    backgroundColor: "#544544",
   },
 };
 

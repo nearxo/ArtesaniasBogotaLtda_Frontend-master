@@ -1,9 +1,8 @@
 import React from 'react';
-import InNavbar from '../InNavBar'; // Ruta correcta
+import InNavbar from '../InNavbar' // Ruta correcta
 import SidebarStore from './SidebarStore';
-import { FaRegUserCircle } from 'react-icons/fa';
 
-const BaseStore = ({ userName = "Usuario", userRole = "Cliente" }) => {
+const BaseStore = ({ userName = "Usuario", userRole = "Cliente", children }) => {
   const styles = {
     baseContainer: {
       display: 'flex',
@@ -37,24 +36,27 @@ const BaseStore = ({ userName = "Usuario", userRole = "Cliente" }) => {
       fontSize: 'var(--fuente-pequena)',
       color: 'var(--color-negro)',
       marginTop: 'var(--espaciado-grande)',
-    }
+    },
   };
 
   return (
     <div style={styles.baseContainer}>
+      {/* Navbar */}
       <header style={styles.header}>
         <InNavbar userName={userName} userRole={userRole} />
       </header>
+
+      {/* Contenedor principal con Sidebar y contenido dinámico */}
       <div style={styles.content}>
         <aside style={styles.sidebar}>
           <SidebarStore />
         </aside>
         <main style={styles.main}>
-          {/**/}
-          <h2>Bienvenido a la Tienda</h2>
-          <p>Aquí puedes gestionar tu inventario, pedidos, facturación y estadísticas.</p>
+          {children} {/* Renderiza lo que esté dentro de <BaseStore> */}
         </main>
       </div>
+
+      {/* Footer */}
       <footer style={styles.footer}>
         © 2025 Tienda Store
       </footer>

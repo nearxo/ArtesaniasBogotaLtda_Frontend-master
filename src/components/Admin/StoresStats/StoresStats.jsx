@@ -19,9 +19,8 @@ const StoresStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       //TODO: Cambiar fakeData por la llamada a la API
-      // const data = await axios.get(`a?startDate=${startDate}&endDate=${endDate}`);
+      const data = await axios.get('https://backend-vercel-lime.vercel.app/Angie/storesStats');
 
-      const data = fakeData;
       setSalesData(data);
     };
     fetchData();

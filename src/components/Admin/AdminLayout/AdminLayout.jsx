@@ -1,5 +1,5 @@
 import React from "react";
-import InNavbar from "../../InNavBar";
+import InNavbar from "../../InNavbar";
 import SidebarAdmin from "../SidebarAdmin/SidebarAdmin";
 
 import "./AdminLayout.css";
